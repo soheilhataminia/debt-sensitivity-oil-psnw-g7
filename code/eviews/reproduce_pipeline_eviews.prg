@@ -12,7 +12,7 @@
 '   - robustness checks
 '
 ' DATA FILE
-'   data/processed/g7_main_panel_2000_2020.xlsx
+'   data/processed/data_processed_g7.xlsx
 '
 ' BEFORE RUNNING
 '   1) Import or open the Excel file named above and create an EViews workfile
@@ -32,7 +32,7 @@
 '----------------------------
 ' 0. USER SETTINGS
 '----------------------------
-%DATAFILE = "data/processed/g7_main_panel_2000_2020.xlsx"
+%DATAFILE = "data/processed/data_processed_g7.xlsx"
 %CLUSTEROPT = "cov=whitecross"
 
 ' Raw variable names in the active page
