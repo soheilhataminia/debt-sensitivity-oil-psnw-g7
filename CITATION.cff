@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this replication package, please cite the associated manuscript and this repository."
+title: "Replication package for Public Debt Sensitivity to Oil-Price Conditions in the G7: The Role of Public Sector Net Worth"
+authors:
+  - family-names: "Hataminia"
+    given-names: "Soheil"
+  - family-names: "Mohammadzadeh Asl"
+    given-names: "Nazi"
+date-released: 2026-04-29
+version: "1.0.0"
+repository-code: "https://github.com/soheilhataminia/debt-sensitivity-oil-psnw-g7"
+keywords:
+  - public debt
+  - oil-price conditions
+  - public sector net worth
+  - G7
+  - fiscal policy
+  - energy economics
+  - EViews
+  - replication package
+
+preferred-citation:
+  type: generic
+  title: "Public Debt Sensitivity to Oil-Price Conditions in the G7: The Role of Public Sector Net Worth"
+  authors:
+    - family-names: "Hataminia"
+      given-names: "Soheil"
+    - family-names: "Mohammadzadeh Asl"
+      given-names: "Nazi"
+  year: 2026
