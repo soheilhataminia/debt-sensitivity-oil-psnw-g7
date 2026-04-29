@@ -1,7 +1,6 @@
-
 '===============================================================================
 ' EViews reproduction program
-' Article: Public Debt Sensitivity to Oil Shocks in the G7:
+' Article: Public Debt Sensitivity to Oil-Price Conditions in the G7:
 '          The Role of Public Sector Net Worth
 '
 ' PURPOSE
@@ -12,10 +11,15 @@
 '   - supplementary auxiliary specifications
 '   - robustness checks
 '
+' DATA FILE
+'   data/processed/g7_main_panel_2000_2020.xlsx
+'
 ' BEFORE RUNNING
-'   1) Open the workfile that contains the panel data in LONG format.
+'   1) Import or open the Excel file named above and create an EViews workfile
+'      that contains the panel data in LONG format.
 '   2) Make sure the active page contains one row per Country-Year observation.
-'   3) Edit the variable-name macros below only if your raw variable names differ.
+'   3) Make sure the oil-price column is named BrentOilPrice.
+'   4) Edit the variable-name macros below only if your raw variable names differ.
 '
 ' IMPORTANT
 '   - This script uses conservative t-based small-cluster inference (df = G-1),
@@ -28,6 +32,7 @@
 '----------------------------
 ' 0. USER SETTINGS
 '----------------------------
+%DATAFILE = "data/processed/g7_main_panel_2000_2020.xlsx"
 %CLUSTEROPT = "cov=whitecross"
 
 ' Raw variable names in the active page
@@ -35,7 +40,7 @@
 %vYear    = "Year"
 %vDebt    = "Debt"
 %vPSNW    = "PSNW"
-%vOil     = "BerntOilPrice"
+%vOil     = "BrentOilPrice"
 %vCPI     = "CPI"
 %vPR      = "PolicyRate"
 %vOG      = "OutputGap"
@@ -96,7 +101,7 @@ series interaction_unexpected = z_unexpected_oil*l1_z_psnw
 smpl if {%vYear}>=2001 and {%vYear}<=2020
 
 '----------------------------
-' 4. TABLE 1: DESCRIPTIVE STATISTICS
+' 4. TABLE 2: DESCRIPTIVE STATISTICS
 '----------------------------
 smpl @all
 table tbl_desc(8,6)
@@ -157,7 +162,7 @@ tbl_desc(8,5) = @str(@min({%vPB}),"f.3")
 tbl_desc(8,6) = @str(@max({%vPB}),"f.3")
 
 '----------------------------
-' 5. HEADLINE MODEL (TABLE 2)
+' 5. HEADLINE MODEL (TABLE 3)
 '----------------------------
 smpl if {%vYear}>=2001 and {%vYear}<=2020
 equation eq_head.ls({%CLUSTEROPT}) {%vDebt} c l1_debt l1_z_psnw interaction_level l1_z_cpi l1_z_policyrate l1_z_outputgap l1_z_primarybalance @expand({%vCountry},@dropfirst) @expand({%vYear},@dropfirst)
@@ -244,7 +249,7 @@ tbl_head(8,3) = @str(!se_l1pb,"f.3")
 tbl_head(8,4) = @str(!p_l1pb,"f.3")
 
 '----------------------------
-' 6. FIGURE 1 DATA AND GRAPH
+' 6. FIGURE 6 DATA AND GRAPH
 '----------------------------
 !xmin = @min(l1_z_psnw)
 !xmax = @max(l1_z_psnw)
@@ -258,11 +263,11 @@ series lower95   = relsens - 1.96*@abs(psnw_grid)*!se_inter
 series zero_line = 0
 group g_fig1 psnw_grid relsens upper95 lower95 zero_line
 graph fig1.xyline g_fig1
-fig1.label(d) Figure 1. Relative differential debt sensitivity to common oil-price conditions across levels of lagged standardized public sector net worth.
+fig1.label(d) Figure 6. Relative differential debt sensitivity to common oil-price conditions across levels of lagged standardized public sector net worth.
 pageselect Untitled
 
 '----------------------------
-' 7. LOCAL PROJECTIONS (TABLE 3)
+' 7. LOCAL PROJECTIONS (TABLE 4)
 '----------------------------
 table tbl_lp(5,6)
 tbl_lp(1,1) = "Horizon"
@@ -302,7 +307,7 @@ for !h = 0 to 3
 next
 
 '----------------------------
-' 8. COUNTRY-LEVEL MODEL-IMPLIED SENSITIVITY (TABLE 4)
+' 8. COUNTRY-LEVEL MODEL-IMPLIED SENSITIVITY (TABLE 5)
 '----------------------------
 smpl if {%vYear}>=2001 and {%vYear}<=2020
 
@@ -347,7 +352,7 @@ tbl_ctry(8,1) = "Italy"
 tbl_ctry(8,2) = @str(!m_ita,"f.3")
 tbl_ctry(8,3) = @str(!b_inter*!m_ita,"f.3")
 
-' Country-year values used in Figure 2
+' Country-year values used in Figure 7
 smpl if {%vYear}>=2001 and {%vYear}<=2020
 series relsens_it = !b_inter*l1_z_psnw
 
